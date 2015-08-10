@@ -5,19 +5,19 @@ class PictureToken < ActiveRecord::Base
     auth_uri = (client.authorization_uri(options={})).to_s
   end
   def self.save_oauth_code(code)
-    if RzOauth2.where(id: 1).first == nil
-      rz_oauth2 = RzOauth2.new
+    if PictureToken.where(id: 1).first == nil
+      rz_oauth2 = PictureToken.new
       rz_oauth2.code = code
       rz_oauth2.save    
     else
-      rz_oauth2 = RzOauth2.where(id: 1).first
+      rz_oauth2 = PictureToken.where(id: 1).first
       rz_oauth2.code = code
       rz_oauth2.save  
     end
   end
   def self.get_access_token
     client = Oauth.credentials
-    rz_oauth2= RzOauth2.where(id: 1).first
+    rz_oauth2= PictureToken.where(id: 1).first
     client.code= rz_oauth2.code
     token_hash = client.fetch_access_token!
     # if token_hash != nil
