@@ -2,7 +2,8 @@ class PictureToken < ActiveRecord::Base
   def self.get_auth_uri
     # Oauth2.init_open_auth
     client = Oauth.credentials
-    auth_uri = (client.authorization_uri(options={})).to_s
+    options = {:response_type=>"code",approval_prompt: :force,access_type: :offline}    
+    auth_uri = (client.authorization_uri(options)).to_s
   end
   def self.save_oauth_code(code)
     if PictureToken.where(id: 1).first == nil
